@@ -1,0 +1,91 @@
+/* Fundo e layout */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, #0277bd, #4fc3f7);
+  color: #fff;
+}
+
+.container {
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+}
+
+/* Inputs */
+.input-group {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid #80deea;
+  border-radius: 30px;
+  padding: 10px 15px;
+  margin: 15px 0;
+}
+
+.input-group .icon {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.input-group input {
+  background: none;
+  border: none;
+  outline: none;
+  flex: 1;
+  color: white;
+  font-size: 16px;
+}
+
+.input-group input::placeholder {
+  color: #b2ebf2;
+}
+
+/* Botão Acessar */
+.btn-acessar {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+  border: none;
+  border-radius: 30px;
+  background: #004d63;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-acessar:hover {
+  background: #003742;
+}
+
+/* Slogan */
+.slogan {
+  margin: 40px 0 20px;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Botão Saiba Mais */
+.button {
+  display: inline-block;
+  text-decoration: none;
+  color: #004d63;
+  font-weight: bold;
+  font-style: italic;
+  background: rgba(255,255,255,0.8);
+  padding: 12px 25px;
+  border-radius: 30px;
+  transition: 0.3s;
+}
+
+.button:hover {
+  background: #fff;
+}
