@@ -1,5 +1,7 @@
-/* Fundo e layout */
-body {
+/* ====================
+   Fundo e layout
+==================== */
+body { 
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
@@ -11,13 +13,18 @@ body {
   color: #fff;
 }
 
+/* Container centralizado */
 .container {
   text-align: center;
   width: 90%;
   max-width: 400px;
+  background: rgba(0,0,0,0.2);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
-/* Inputs */
+/* Campos de entrada */
 .input-group {
   display: flex;
   align-items: center;
@@ -65,10 +72,10 @@ body {
   background: #003742;
 }
 
-/* Slogan */
+/* Slogan / mensagem de login */
 .slogan {
-  margin: 40px 0 20px;
-  font-size: 18px;
+  margin: 20px 0;
+  font-size: 16px;
   font-weight: bold;
   letter-spacing: 1px;
 }

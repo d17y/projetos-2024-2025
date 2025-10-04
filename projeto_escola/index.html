@@ -1,0 +1,259 @@
+<!DOCTYPE html> <!-- # Define que o documento é HTML5 -->
+<html lang="pt-BR"> <!-- # Define idioma como português do Brasil -->
+<head>
+  <meta charset="UTF-8" /> <!-- # Permite usar caracteres especiais e acentos -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <!-- # Faz o site responsivo no celular -->
+  <title>Banco Seguro - Login / Cadastro</title> <!-- # Título que aparece na aba do navegador -->
+  <link rel="stylesheet" href="style.css"> <!-- # Importa o CSS externo -->
+
+  <style>
+    /* ---------- Estilos internos para alternar login/cadastro ---------- */
+    .switcher { /* # Container dos botões "Entrar" e "Criar conta" */
+      display:flex; /* # Flexbox para colocar lado a lado */
+      gap:8px; /* # Espaço entre os botões */
+      justify-content:center; /* # Centraliza horizontalmente */
+      margin-bottom: 10px; /* # Espaço abaixo dos botões */
+    }
+
+    .switcher button { /* # Estilo dos botões */
+      padding:8px 14px; /* # Espaçamento interno */
+      border-radius:20px; /* # Bordas arredondadas */
+      border:none; /* # Remove borda padrão */
+      cursor:pointer; /* # Cursor de mão ao passar por cima */
+      font-weight:bold; /* # Texto em negrito */
+      transition: 0.3s; /* # Transição suave para hover */
+    }
+
+    .switcher .ativo { /* # Botão ativo recebe cor diferente */
+      background:#004d63; /* # Fundo azul escuro */
+      color:#fff; /* # Texto branco */
+    }
+
+    .formulario { display:none; } /* # Todos formulários escondidos por padrão */
+    .formulario.ativo { display:block; } /* # Formulário ativo é mostrado */
+
+    .mensagem-caixa { /* # Caixa de mensagem (erro/sucesso) */
+      margin-top:12px; /* # Espaço acima */
+      padding:10px 14px; /* # Espaçamento interno */
+      border-radius:10px; /* # Bordas arredondadas */
+      display:inline-block; /* # Permite largura mínima */
+      min-width:250px; /* # Largura mínima */
+      transition: 0.3s; /* # Suaviza alterações */
+    }
+  </style>
+</head>
+<body>
+  <div class="container"> <!-- # Container principal centralizado -->
+    <h2>Banco Seguro</h2> <!-- # Título principal -->
+
+    <div class="switcher"> <!-- # Botões para alternar login/cadastro -->
+      <button id="btn-login" class="ativo" onclick="mostrar('login')">Entrar</button> <!-- # Botão login ativo por padrão -->
+      <button id="btn-cadastro" onclick="mostrar('cadastro')">Criar conta</button> <!-- # Botão para criar conta -->
+    </div>
+
+    <!-- FORM LOGIN -->
+    <div id="form-login" class="formulario ativo"> <!-- # Formulário de login visível inicialmente -->
+      <div class="input-group"> <!-- # Grupo input CPF -->
+        <span class="icon">👤</span> <!-- # Ícone usuário -->
+        <input type="text" id="cpfLogin" data-mask="cpf" placeholder="Digite seu CPF"> <!-- # Input para CPF com máscara -->
+      </div>
+
+      <div class="input-group"> <!-- # Grupo input senha -->
+        <span class="icon">🔒</span> <!-- # Ícone de cadeado -->
+        <input type="password" id="senhaLogin" placeholder="Digite sua senha"> <!-- # Input de senha -->
+      </div>
+
+      <button class="btn-acessar" onclick="verificarLogin()">Acessar</button> <!-- # Botão que chama função de login -->
+      <div id="mensagemLogin" class="mensagem-caixa" style="display:none;"></div> <!-- # Caixa de mensagem do login -->
+    </div>
+
+    <!-- FORM CADASTRO -->
+    <div id="form-cadastro" class="formulario"> <!-- # Formulário de cadastro escondido inicialmente -->
+      <div class="input-group"> <!-- # Input CPF novo usuário -->
+        <span class="icon">👤</span>
+        <input type="text" id="cpfCadastro" data-mask="cpf" placeholder="CPF (novo usuário)">
+      </div>
+
+      <div class="input-group"> <!-- # Input telefone -->
+        <span class="icon">📞</span>
+        <input type="text" id="telefoneCadastro" data-mask="telefone" placeholder="Telefone (ex: (11) 91234-5678)">
+      </div>
+
+      <div class="input-group"> <!-- # Input senha -->
+        <span class="icon">🔒</span>
+        <input type="password" id="senhaCadastro" placeholder="Senha (mín. 4 caracteres)">
+      </div>
+
+      <div class="input-group"> <!-- # Input confirmação senha -->
+        <span class="icon">🔒</span>
+        <input type="password" id="senhaCadastroConf" placeholder="Confirme a senha">
+      </div>
+
+      <button class="btn-acessar" onclick="criarConta()">Criar conta</button> <!-- # Botão para criar conta -->
+      <div id="mensagemCadastro" class="mensagem-caixa" style="display:none;"></div> <!-- # Caixa de mensagem do cadastro -->
+    </div>
+
+    <a href="#" class="button" style="margin-top:16px;">saiba mais.</a> <!-- # Link "saiba mais" -->
+  </div>
+
+  <script>
+    /* ---------- Função para alternar login/cadastro ---------- */
+    function mostrar(tipo){
+      document.getElementById("form-login").classList.remove("ativo"); // # Esconde login
+      document.getElementById("form-cadastro").classList.remove("ativo"); // # Esconde cadastro
+      document.getElementById("btn-login").classList.remove("ativo"); // # Desativa botão login
+      document.getElementById("btn-cadastro").classList.remove("ativo"); // # Desativa botão cadastro
+
+      if(tipo === "login"){ // # Se for login
+        document.getElementById("form-login").classList.add("ativo"); // # Mostra login
+        document.getElementById("btn-login").classList.add("ativo"); // # Ativa botão login
+      } else { // # Se for cadastro
+        document.getElementById("form-cadastro").classList.add("ativo"); // # Mostra cadastro
+        document.getElementById("btn-cadastro").classList.add("ativo"); // # Ativa botão cadastro
+      }
+      ocultarMensagens(); // # Limpa mensagens anteriores
+    }
+
+    /* ---------- Função para mostrar mensagens ---------- */
+    function mostrarMensagem(id, texto, cor="#fff", fundo="rgba(0,0,0,0.35)"){
+      const el = document.getElementById(id); // # Seleciona elemento
+      el.style.display = "inline-block"; // # Mostra elemento
+      el.style.color = cor; // # Cor do texto
+      el.style.background = fundo; // # Cor de fundo
+      el.innerText = texto; // # Define mensagem
+    }
+
+    /* ---------- Ocultar mensagens ---------- */
+    function ocultarMensagens(){
+      ["mensagemLogin","mensagemCadastro"].forEach(id => {
+        const el = document.getElementById(id);
+        el.style.display = "none"; // # Esconde
+        el.innerText = ""; // # Limpa texto
+      });
+    }
+
+    /* ---------- Funções de armazenamento local ---------- */
+    function carregarUsuarios(){
+      const raw = localStorage.getItem("banco_usuarios"); // # Busca usuários salvos
+      return raw ? JSON.parse(raw) : {}; // # Retorna objeto ou vazio
+    }
+    function salvarUsuarios(obj){
+      localStorage.setItem("banco_usuarios", JSON.stringify(obj)); // # Salva objeto em localStorage
+    }
+
+    /* ---------- Máscaras de CPF e telefone ---------- */
+    function formatarCPF(valor){
+      const nums = valor.replace(/\D/g,'').slice(0,11); // # Pega só números, máximo 11
+      const partes = [];
+      if(nums.length>0) partes.push(nums.slice(0,3)); // # Primeiros 3 dígitos
+      if(nums.length>3) partes.push(nums.slice(3,6)); // # Próximos 3
+      if(nums.length>6) partes.push(nums.slice(6,9)); // # Próximos 3
+      const finais = nums.slice(9,11); // # Últimos 2
+      let resultado = partes.join('.');
+      if(finais) resultado += (resultado ? '-' : '') + finais;
+      return resultado; // # Retorna CPF formatado
+    }
+
+    function formatarTelefone(valor){
+      const nums = valor.replace(/\D/g,'').slice(0,11); // # Pega só números, máximo 11
+      if(nums.length<=2) return '('+nums; // # Só DDD
+      if(nums.length<=7) return '('+nums.slice(0,2)+') '+nums.slice(2); // # DDD + prefixo
+      return '('+nums.slice(0,2)+') '+nums.slice(2,7)+'-'+nums.slice(7); // # Completo
+    }
+
+    /* ---------- Aplica máscara ao digitar ---------- */
+    function aplicarMascara(input, tipo){
+      const start = input.selectionStart; // # Salva posição do cursor
+      const oldVal = input.value; // # Valor antigo
+      let novoVal;
+      if(tipo==='cpf') novoVal = formatarCPF(oldVal); // # Formata CPF
+      else if(tipo==='telefone') novoVal = formatarTelefone(oldVal); // # Formata telefone
+      input.value = novoVal; // # Atualiza valor
+
+      /* # Ajusta posição do cursor para não pular */
+      let numerosAntesCursor = oldVal.slice(0,start).replace(/\D/g,'').length;
+      let pos=0, contNums=0;
+      while(pos<novoVal.length && contNums<numerosAntesCursor){
+        if(/\d/.test(novoVal[pos])) contNums++;
+        pos++;
+      }
+      input.setSelectionRange(pos,pos);
+    }
+
+    function ativarMascaras(){
+      document.querySelectorAll('input[data-mask]').forEach(input=>{
+        const tipo = input.dataset.mask;
+        const max = tipo==='cpf'?14:15; // # Máximo de caracteres
+        input.setAttribute('maxlength', max);
+        input.addEventListener('input', e=>aplicarMascara(e.target,tipo));
+        input.addEventListener('paste', e=>setTimeout(()=>aplicarMascara(e.target,tipo),0));
+      });
+    }
+    document.addEventListener('DOMContentLoaded', ativarMascaras); // # Ativa máscaras ao carregar página
+
+    /* ---------- Função criar conta ---------- */
+    function criarConta(){
+      ocultarMensagens();
+      const cpfRaw = document.getElementById("cpfCadastro").value;
+      const telefoneRaw = document.getElementById("telefoneCadastro").value;
+      const senha = document.getElementById("senhaCadastro").value;
+      const senhaConf = document.getElementById("senhaCadastroConf").value;
+
+      const cpf = cpfRaw.replace(/\D/g,''); // # Remove pontuação
+      const telefone = telefoneRaw.replace(/\D/g,''); // # Remove pontuação
+
+      if(!cpf){ mostrarMensagem("mensagemCadastro","Digite um CPF válido.","#fff","rgba(255,140,0,0.2)"); return; }
+      if(!telefone || telefone.length<10){ mostrarMensagem("mensagemCadastro","Telefone inválido","#fff","rgba(255,140,0,0.2)"); return; }
+      if(senha.length<4){ mostrarMensagem("mensagemCadastro","Senha muito curta (mín 4 caracteres).","#fff","rgba(255,0,0,0.25)"); return; }
+      if(senha !== senhaConf){ mostrarMensagem("mensagemCadastro","As senhas não conferem","#fff","rgba(255,0,0,0.25)"); return; }
+
+      const usuarios = carregarUsuarios(); // # Carrega usuários do storage
+      if(usuarios[cpf]){ mostrarMensagem("mensagemCadastro","Já existe uma conta com esse CPF","#fff","rgba(255,140,0,0.2)"); return; }
+
+      usuarios[cpf] = { senha, telefone }; // # Salva novo usuário
+      salvarUsuarios(usuarios); // # Salva no localStorage
+      mostrarMensagem("mensagemCadastro","✅ Conta criada! Faça login agora.","lightgreen","rgba(0,128,0,0.15)");
+
+      /* # Limpa inputs e vai para login */
+      setTimeout(()=>{
+        document.getElementById("cpfCadastro").value="";
+        document.getElementById("telefoneCadastro").value="";
+        document.getElementById("senhaCadastro").value="";
+        document.getElementById("senhaCadastroConf").value="";
+        mostrar("login");
+      },1000);
+    }
+
+    /* ---------- Função login ---------- */
+    function verificarLogin(){
+      ocultarMensagens();
+      const cpfRaw = document.getElementById("cpfLogin").value;
+      const senha = document.getElementById("senhaLogin").value;
+      const cpf = cpfRaw.replace(/\D/g,''); // # Remove pontuação
+
+      if(!cpf || !senha){ mostrarMensagem("mensagemLogin","Preencha CPF e senha","#fff","rgba(255,140,0,0.2)"); return; }
+      const usuarios = carregarUsuarios();
+      if(usuarios[cpf] && usuarios[cpf].senha === senha){
+        mostrarMensagem("mensagemLogin","✅ Login bem-sucedido! Redirecionando...","lightgreen","rgba(0,128,0,0.15)");
+        // salva o CPF do usuário que fez login para a próxima página
+        localStorage.setItem('ultimo_cpf_logado', cpf);
+
+        setTimeout(()=> window.location.href="index1.html",1000); // # Redireciona após 1s
+      } else {
+        mostrarMensagem("mensagemLogin","❌ CPF ou senha incorretos","#fff","rgba(255,0,0,0.25)");
+      }
+    }
+
+    /* ---------- Conta de exemplo inicial ---------- */
+    (function inicializarExemplo(){
+      const usuarios = carregarUsuarios();
+      const exemploCpf = "12345678910"; // # CPF de exemplo
+      if(!usuarios[exemploCpf]){ 
+        usuarios[exemploCpf]={ senha:"2000", telefone:"11999998888" }; // # Senha e telefone de exemplo
+        salvarUsuarios(usuarios); 
+      }
+    })();
+
+  </script>
+</body>
+</html>
