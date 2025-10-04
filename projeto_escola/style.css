@@ -84,10 +84,10 @@ body {
 .button {
   display: inline-block;
   text-decoration: none;
-  color: #f8e325;
+  color: #72700a;
   font-weight: bold;
   font-style: italic;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255, 251, 190, 0.8);
   padding: 12px 25px;
   border-radius: 30px;
   transition: 0.3s;
