@@ -63,6 +63,7 @@
       align-items: center;
       cursor: pointer;
       transition: background 0.3s ease;
+      text-decoration: none;
     }
 
     .btn:hover {
@@ -89,18 +90,18 @@
   <div class="saldo" id="saldo">R$ 450,99</div>
 
   <div class="btn-container">
-    <button class="btn" onclick="acao('pix')">
+    <a class="btn" href="pix.html">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/money-transfer.png" alt="Pix">
       PIX
-    </button>
-    <button class="btn" onclick="acao('invest')">
+    </a>
+    <a class="btn" href="invest.html">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/investment.png" alt="Investir">
       INVEST
-    </button>
-    <button class="btn" onclick="acao('recarga')">
+    </a>
+    <a class="btn" href="recarga.html">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/phone.png" alt="Recarga">
       RECARGA
-    </button>
+    </a>
   </div>
 
   <div class="info" id="infoUser">
@@ -131,10 +132,6 @@
   document.getElementById('cpf').innerText = cpf;
   document.getElementById('tel').innerText = user.telefone;
   document.getElementById('verificado').innerText = user.verificado ? 'Sim ✅' : 'Não ❌';
-
-  function acao(tipo) {
-    alert(`Você clicou em ${tipo.toUpperCase()}. Esta função ainda será implementada.`);
-  }
 </script>
 
 </body>
