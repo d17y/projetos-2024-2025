@@ -1,179 +1,140 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8"> <!-- Permite acentuação -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsivo -->
-  <title>Banco Digital - Painel</title> <!-- Título do site -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco Digital</title>
   <style>
-    /* Layout geral da página */
-    body {
+    * {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(180deg,#4fc3f7,#0277bd);
-      color: #fff;
-      min-height: 100vh;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #4fc3f7, #0277bd);
+      color: white;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    /* Container central */
-    .container {
-      width: 90%;
-      max-width: 500px;
-      background: rgba(0,0,0,0.25);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    .app {
+      background: #ffffff10;
+      backdrop-filter: blur(10px);
+      width: 320px;
+      border-radius: 24px;
+      padding: 30px 20px;
       text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
 
-    h2 {
-      margin-top: 0;
+    .saldo-label {
+      font-size: 14px;
+      opacity: 0.8;
     }
 
-    /* Campos de informação */
-    .info {
-      margin: 10px 0;
-      font-size: 16px;
-    }
-
-    /* Saldo */
     .saldo {
       font-size: 32px;
       font-weight: bold;
-      margin: 20px 0;
+      margin: 10px 0 30px;
     }
 
-    /* Botões */
-    button {
-      padding: 10px 15px;
-      margin: 5px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
+    .btn-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
     }
 
-    .btn-azul {
-      background: #004d63;
-      color: #fff;
-    }
-
-    .btn-claro {
-      background: rgba(255,255,255,0.85);
-      color: #004d63;
-    }
-
-    input[type=number] {
+    .btn {
       width: 80px;
-      padding: 6px;
-      border-radius: 6px;
+      height: 80px;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-weight: bold;
       border: none;
-      margin-left: 6px;
-      text-align: right;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
 
-    .mensagem {
-      margin-top: 10px;
-      min-height: 24px;
+    .btn:hover {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .btn img {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 6px;
+    }
+
+    .info {
+      font-size: 12px;
+      margin-top: 20px;
+      opacity: 0.85;
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <h2>Banco Digital - Painel</h2>
-  
-  <!-- Informações do usuário -->
-  <div class="info" id="cpfInfo">CPF: -</div>
-  <div class="info" id="telInfo">Telefone: -</div>
-  <div class="info" id="verifInfo">Verificado: -</div>
-
-  <!-- Saldo inicial -->
+<div class="app">
+  <div class="saldo-label">SALDO</div>
   <div class="saldo" id="saldo">R$ 450,99</div>
 
-  <!-- Operações de banco -->
-  <div>
-    <label>Valor:</label>
-    <input type="number" id="valor" value="0" />
-  </div>
-  <div>
-    <button class="btn-azul" id="btnDepositar">Depositar</button>
-    <button class="btn-claro" id="btnSacar">Sacar</button>
+  <div class="btn-container">
+    <button class="btn" onclick="acao('pix')">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/money-transfer.png" alt="Pix">
+      PIX
+    </button>
+    <button class="btn" onclick="acao('invest')">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/investment.png" alt="Investir">
+      INVEST
+    </button>
+    <button class="btn" onclick="acao('recarga')">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/phone.png" alt="Recarga">
+      RECARGA
+    </button>
   </div>
 
-  <!-- Mensagem de feedback -->
-  <div class="mensagem" id="mensagem"></div>
+  <div class="info" id="infoUser">
+    CPF: <span id="cpf">-</span> <br>
+    Tel: <span id="tel">-</span> <br>
+    Verificado: <span id="verificado">-</span>
+  </div>
 </div>
 
 <script>
-  /*
-    Simula um banco digital simples:
-    - Mostra CPF, telefone e status de verificação do usuário
-    - Saldo inicial R$450,99
-    - Permite depósitos e saques
-    - Salva os dados no localStorage
-  */
-
-  const cpf = localStorage.getItem('ultimo_cpf_logado') || '123.456.789-10'; // CPF usado na sessão
+  const cpf = localStorage.getItem('ultimo_cpf_logado') || '123.456.789-10';
   const usersRaw = localStorage.getItem('banco_usuarios') || '{}';
   const users = JSON.parse(usersRaw);
 
-  // Se o usuário não existir, cria com saldo inicial 450,99
-  if(!users[cpf]){
+  if (!users[cpf]) {
     users[cpf] = {
-      telefone: '11999999999', // telefone de exemplo
-      saldo: 450.99,           // saldo inicial
-      verificado: true          // já verificado (demo)
+      telefone: '11999999999',
+      saldo: 450.99,
+      verificado: true
     };
     localStorage.setItem('banco_usuarios', JSON.stringify(users));
   }
 
   const user = users[cpf];
 
-  // Exibe os dados na tela
-  document.getElementById('cpfInfo').innerText = 'CPF: ' + cpf;
-  document.getElementById('telInfo').innerText = 'Telefone: ' + user.telefone;
-  document.getElementById('verifInfo').innerText = 'Verificado: ' + (user.verificado ? 'Sim ✅' : 'Não ❌');
+  // Atualiza UI
   document.getElementById('saldo').innerText = 'R$ ' + user.saldo.toFixed(2);
+  document.getElementById('cpf').innerText = cpf;
+  document.getElementById('tel').innerText = user.telefone;
+  document.getElementById('verificado').innerText = user.verificado ? 'Sim ✅' : 'Não ❌';
 
-  const msg = document.getElementById('mensagem');
-  const valorInput = document.getElementById('valor');
-
-  // Função para atualizar saldo e salvar no localStorage
-  function atualizarSaldo(novoSaldo){
-    user.saldo = novoSaldo;
-    users[cpf] = user;
-    localStorage.setItem('banco_usuarios', JSON.stringify(users));
-    document.getElementById('saldo').innerText = 'R$ ' + user.saldo.toFixed(2);
+  function acao(tipo) {
+    alert(`Você clicou em ${tipo.toUpperCase()}. Esta função ainda será implementada.`);
   }
-
-  // Depositar
-  document.getElementById('btnDepositar').addEventListener('click', ()=>{
-    const v = parseFloat(valorInput.value);
-    if(v>0){
-      atualizarSaldo(user.saldo + v);
-      msg.innerText = '💰 Depósito de R$ ' + v.toFixed(2) + ' realizado!';
-    }else{
-      msg.innerText = '❌ Valor inválido para depósito.';
-    }
-  });
-
-  // Sacar
-  document.getElementById('btnSacar').addEventListener('click', ()=>{
-    const v = parseFloat(valorInput.value);
-    if(v>0){
-      if(v <= user.saldo){
-        atualizarSaldo(user.saldo - v);
-        msg.innerText = '🏧 Saque de R$ ' + v.toFixed(2) + ' realizado!';
-      } else {
-        msg.innerText = '❌ Saldo insuficiente!';
-      }
-    } else {
-      msg.innerText = '❌ Valor inválido para saque.';
-    }
-  });
 </script>
 
 </body>
