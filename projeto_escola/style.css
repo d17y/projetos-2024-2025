@@ -9,7 +9,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom, #0277bd, #4fc3f7);
+       background: linear-gradient(to bottom, #d6f817, #bec928); /* Fundo degradê */
   color: #fff;
 }
 
