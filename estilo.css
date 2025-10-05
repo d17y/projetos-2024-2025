@@ -1,0 +1,82 @@
+/* ====== ESTILO GERAL ====== */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: white;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ====== CABEÇALHO ====== */
+header {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+/* ====== SEÇÃO DE PROJETOS ====== */
+.projetos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px 20px;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid transparent;
+  border-radius: 15px;
+  padding: 20px;
+  width: 280px;
+  text-align: center;
+  transition: 0.3s;
+  backdrop-filter: blur(8px);
+}
+
+.card:hover {
+  border-color: cyan;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px cyan;
+}
+
+.card h2 {
+  margin-bottom: 10px;
+  color: #00ffff;
+}
+
+.card p {
+  font-size: 0.9rem;
+  color: #ddd;
+  margin-bottom: 15px;
+}
+
+.card a {
+  text-decoration: none;
+  color: black;
+  background-color: cyan;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.card a:hover {
+  background-color: white;
+  color: black;
+}
+
+/* ====== RODAPÉ ====== */
+footer {
+  text-align: center;
+  margin-top: auto;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+  font-size: 0.9rem;
+}
