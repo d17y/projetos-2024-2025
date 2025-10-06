@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Banco Digital</title>
+  <title>Banco Digital - Futurista</title>
   <style>
     * {
       margin: 0;
@@ -12,34 +12,37 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom, #d6f817, #bec928); /* Fundo degradê */
-      color: white;
+      font-family: 'Inter', sans-serif;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      background: linear-gradient(135deg, #000000, #00FF88);
+      color: white;
     }
 
     .app {
-      background: #ffffff10;
-      backdrop-filter: blur(10px);
-      width: 320px;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(12px);
+      width: 350px;
       border-radius: 24px;
-      padding: 30px 20px;
+      padding: 30px 25px;
       text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
     }
 
     .saldo-label {
       font-size: 14px;
-      opacity: 0.8;
+      opacity: 0.7;
+      letter-spacing: 1px;
     }
 
     .saldo {
-      font-size: 32px;
+      font-size: 36px;
       font-weight: bold;
       margin: 10px 0 30px;
+      color: #00FF88;
+      text-shadow: 0 0 8px #00FF88;
     }
 
     .btn-container {
@@ -50,36 +53,45 @@
     }
 
     .btn {
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 90px;
       border-radius: 20px;
-      background-color: rgba(255, 255, 255, 0.15);
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 2px solid #00FF88;
       color: white;
       font-weight: bold;
-      border: none;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
       text-decoration: none;
     }
 
     .btn:hover {
-      background-color: rgba(255, 255, 255, 0.25);
+      background-color: rgba(0, 255, 136, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 255, 136, 0.5);
     }
 
     .btn img {
-      width: 24px;
-      height: 24px;
-      margin-bottom: 6px;
+      width: 28px;
+      height: 28px;
+      margin-bottom: 8px;
     }
 
     .info {
-      font-size: 12px;
-      margin-top: 20px;
+      font-size: 13px;
+      margin-top: 25px;
       opacity: 0.85;
+      line-height: 1.5;
+      color: #dff6ff;
+    }
+
+    .info span {
+      font-weight: bold;
+      color: #00FF88;
     }
   </style>
 </head>

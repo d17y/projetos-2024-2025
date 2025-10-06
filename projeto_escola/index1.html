@@ -1,261 +1,275 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" /> <!-- Permite acentuação e caracteres especiais -->
-  <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- Faz o site responsivo -->
-  <title>Verificação por SMS - Banco Seguro</title> <!-- Título da página -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Verificação por SMS - Banco FutureSafe</title>
 
   <style>
-    /* Estilo base da página */
-    body{
-      margin:0; /* Remove margens padrão */
-      font-family: Arial, sans-serif; /* Fonte padrão */
-      height:100vh; /* Altura total da tela */
-      display:flex; /* Flexbox para centralizar container */
-      align-items:center; /* Centraliza verticalmente */
-      justify-content:center; /* Centraliza horizontalmente */
-      background: linear-gradient(to bottom, #d6f817, #bec928); /* Fundo degradê */
-      color:#fff; /* Cor do texto */
+    /* =====================
+       Fundo e layout geral
+    ===================== */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #000000, #00FF88);
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* Container central */
-    .container{
-      width:90%; /* Largura relativa à tela */
-      max-width:420px; /* Largura máxima */
-      background: rgba(0,0,0,0.2); /* Fundo semi-transparente */
-      padding:28px; /* Espaçamento interno */
-      border-radius:18px; /* Bordas arredondadas */
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3); /* Sombra */
-      text-align:center; /* Centraliza o texto */
-      position:relative; /* Para posicionamento interno */
+    /* Container principal */
+    .container {
+      background: rgba(0, 0, 0, 0.25);
+      padding: 40px;
+      border-radius: 25px;
+      box-shadow: 0 0 25px rgba(0, 255, 136, 0.3);
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      animation: fadeIn 1s ease-in-out;
     }
 
-    h1{ margin:0 0 12px; font-size:20px } /* Título */
-    p.desc{ margin:6px 0 18px; color:#eaf9ff } /* Descrição do formulário */
+    /* Animação de entrada */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Título */
+    h1 {
+      font-size: 1.8em;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    /* Descrição */
+    .desc {
+      color: #aaffdd;
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
 
     /* Input do código */
-    #campoCodigo{
-      width:100%; /* Largura total do container */
-      padding:12px; /* Espaçamento interno */
-      border-radius:10px; /* Bordas arredondadas */
-      border:none; /* Sem borda */
-      font-size:18px; /* Tamanho do texto */
-      text-align:center; /* Texto centralizado */
-      outline:none; /* Remove contorno */
-      box-sizing:border-box; /* Inclui padding na largura */
-      margin-bottom:14px; /* Espaço abaixo */
+    #campoCodigo {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #00FFAA;
+      font-size: 1.2em;
+      text-align: center;
+      letter-spacing: 2px;
+      outline: none;
+      box-shadow: inset 0 0 8px rgba(0, 255, 136, 0.3);
+    }
+
+    #campoCodigo::placeholder {
+      color: rgba(255, 255, 255, 0.4);
     }
 
     /* Botões */
-    .botao{
-      display:inline-block;
-      padding:10px 18px;
-      border-radius:12px;
-      background:#004d63; /* Fundo azul escuro */
-      color:#fff;
-      font-weight:bold;
-      cursor:pointer;
-      border:none;
-      margin-top:8px;
+    .botao {
+      width: 100%;
+      margin-top: 15px;
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(90deg, #00FF88, #007755);
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1em;
+      transition: 0.3s;
     }
 
-    .botao.ghost{
-      background: rgba(255,255,255,0.85); /* Fundo semi-claro */
-      color:#004d63; /* Texto azul */
-      font-style:italic; /* Itálico */
-      margin-left:8px;
+    .botao:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 10px #00FF88;
     }
 
-    /* Mensagem de feedback */
-    .msg { 
-      margin-top:14px; 
-      min-height:22px; 
-      font-weight:bold;
+    /* Botão secundário */
+    .botao-sec {
+      background: transparent;
+      color: #00FFAA;
+      border: 2px solid #00FFAA;
+      margin-top: 10px;
     }
 
-    /* Notificação falsa de SMS */
+    .botao-sec:hover {
+      background: rgba(0, 255, 170, 0.1);
+    }
+
+    /* Mensagens */
+    #msg {
+      margin-top: 15px;
+      font-size: 0.9em;
+      color: #fff;
+      min-height: 20px;
+    }
+
+    /* Timer */
+    #timer {
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: #00FFAA;
+    }
+
+    /* Fake SMS */
     .fake-sms {
-      position:fixed; /* Fixa no topo da tela */
-      left:50%; /* Centraliza horizontalmente */
-      transform:translateX(-50%) translateY(-120%); /* Inicialmente fora da tela */
-      top:16px; /* Distância do topo */
-      width:320px; 
-      max-width:86%;
-      background:#fff; /* Fundo branco */
-      color:#111; /* Texto escuro */
-      border-radius:12px; /* Bordas arredondadas */
-      padding:12px 14px; /* Espaçamento interno */
-      box-shadow:0 8px 24px rgba(0,0,0,0.35); /* Sombra */
-      display:flex; /* Flex para alinhar número e texto */
-      gap:10px; /* Espaçamento entre elementos */
-      align-items:center; /* Centraliza verticalmente */
-      transition: transform 0.45s cubic-bezier(.2,.9,.2,1); /* Animação suave */
-      z-index:9999;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-150%);
+      background: rgba(0, 0, 0, 0.9);
+      border: 1px solid #00FF88;
+      color: #00FFAA;
+      padding: 12px 18px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+      transition: transform 0.5s ease;
+      max-width: 320px;
+      text-align: left;
+      font-size: 0.9em;
+      backdrop-filter: blur(6px);
     }
 
-    /* Classe que desliza a notificação para dentro */
-    .fake-sms.mostrar { transform: translateX(-50%) translateY(0%); }
+    .fake-sms.show {
+      transform: translateX(-50%) translateY(0%);
+    }
 
-    /* Número do remetente */
-    .fake-sms .numero { font-size:12px; color:#666; }
-    .fake-sms .texto { font-size:15px; font-weight:600; }
+    .fechar-sms {
+      float: right;
+      cursor: pointer;
+      color: #888;
+    }
 
-    /* Botão para fechar notificação */
-    .fechar-sms { margin-left:auto; cursor:pointer; font-weight:bold; color:#666; }
+    /* Telefone */
+    .telefone {
+      font-size: 0.85em;
+      color: #aaffdd;
+      margin-bottom: 12px;
+    }
 
-    /* Telefone exibido no topo */
-    .telefone { color:#cfeffb; margin-bottom:8px; font-size:14px; }
+    /* Botão desativado */
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   </style>
 </head>
 
 <body>
-  <!-- Container principal -->
   <div class="container">
     <h1>Verificação por SMS</h1>
-    <p class="desc">Enviamos um código para o número cadastrado. Insira o código abaixo.</p>
+    <p class="desc">Enviamos um código para seu número cadastrado.</p>
 
-    <!-- Telefone do usuário -->
     <p id="telefoneExib" class="telefone">Número: (carregando...)</p>
-
-    <!-- Input do código (6 dígitos) -->
     <input id="campoCodigo" type="text" inputmode="numeric" maxlength="6" placeholder="000000">
 
-    <!-- Botões -->
-    <div>
-      <button id="btnVerificar" class="botao">Verificar código</button>
-      <button id="btnReenviar" class="botao ghost">Reenviar código</button>
-    </div>
+    <button id="btnVerificar" class="botao">Verificar Código</button>
+    <button id="btnReenviar" class="botao botao-sec">Reenviar Código</button>
 
-    <!-- Mensagem de feedback -->
-    <div id="msg" class="msg"></div>
+    <div id="timer"></div>
+    <div id="msg"></div>
   </div>
 
-  <!-- Notificação falsa simulando SMS -->
-  <div id="fakeSms" class="fake-sms" aria-hidden="true" style="display:none">
-    <div>
-      <div class="numero" id="smsNumero">+55 (xx) xxxxx-xxxx</div>
-      <div class="texto" id="smsTexto">Seu código: 000000</div>
-    </div>
-    <div class="fechar-sms" id="fecharSms">✕</div>
+  <div id="fakeSms" class="fake-sms">
+    <span class="fechar-sms" id="fecharSms">✕</span>
+    <p id="smsTexto"></p>
   </div>
 
   <script>
-    // Pega CPF logado da página anterior
     const cpfLogado = localStorage.getItem('ultimo_cpf_logado');
-
-    // Recupera todos os usuários do localStorage
     const usuarios = JSON.parse(localStorage.getItem('banco_usuarios') || '{}');
+    const OTP_KEY = 'otp_' + cpfLogado;
 
-    // Prefixo para salvar OTP no localStorage
-    const OTP_KEY_PREFIX = 'otp_for_';
-
-    // Função para gerar código OTP de 6 dígitos
-    function gerarOTP(){ return Math.floor(100000 + Math.random()*900000).toString(); }
-
-    // Salva OTP para CPF com expiração
-    function salvarOtpParaCpf(cpf, otp, minutos=5){
-      const exp = Date.now() + minutos*60*1000;
-      const payload = { otp, exp };
-      localStorage.setItem(OTP_KEY_PREFIX + cpf, JSON.stringify(payload));
+    function gerarOTP() {
+      return Math.floor(100000 + Math.random() * 900000).toString();
     }
 
-    // Lê OTP salvo; retorna null se expirou ou não existe
-    function lerOtpParaCpf(cpf){
-      const raw = localStorage.getItem(OTP_KEY_PREFIX + cpf);
-      if(!raw) return null;
-      try {
-        const obj = JSON.parse(raw);
-        if(obj.exp && Date.now() > obj.exp){ localStorage.removeItem(OTP_KEY_PREFIX + cpf); return null; }
-        return obj.otp;
-      } catch(e){ return null; }
+    function salvarOTP(otp, duracao = 30) {
+      const exp = Date.now() + duracao * 1000;
+      localStorage.setItem(OTP_KEY, JSON.stringify({ otp, exp }));
     }
 
-    // Remove OTP
-    function limparOtp(cpf){ localStorage.removeItem(OTP_KEY_PREFIX + cpf); }
-
-    // Mostra notificação falsa com código
-    function mostrarSmsFalso(numeroTexto, textoSms){
-      const fake = document.getElementById('fakeSms');
-      document.getElementById('smsNumero').innerText = numeroTexto;
-      document.getElementById('smsTexto').innerText = textoSms;
-      fake.style.display = 'flex';
-      requestAnimationFrame(()=> fake.classList.add('mostrar'));
-      fake.setAttribute('aria-hidden','false');
-      setTimeout(()=> esconderSmsFalso(), 4500); // some após 4,5s
+    function lerOTP() {
+      const raw = localStorage.getItem(OTP_KEY);
+      if (!raw) return null;
+      const data = JSON.parse(raw);
+      if (Date.now() > data.exp) {
+        localStorage.removeItem(OTP_KEY);
+        return null;
+      }
+      return data.otp;
     }
 
-    // Esconde notificação
-    function esconderSmsFalso(){
-      const fake = document.getElementById('fakeSms');
-      fake.classList.remove('mostrar');
-      fake.setAttribute('aria-hidden','true');
-      setTimeout(()=> { fake.style.display = 'none'; }, 500);
+    function mostrarSmsFake(codigo) {
+      const sms = document.getElementById('fakeSms');
+      document.getElementById('smsTexto').innerText = "Seu código FutureSafe: " + codigo;
+      sms.classList.add('show');
+      setTimeout(() => sms.classList.remove('show'), 4000);
     }
 
-    // Envia código simulado
-    function enviarCodigoSimulado(){
-      if(!cpfLogado) { showMsg('Usuário não identificado. Volte e faça login.', 'rgba(255,80,80,0.25)'); return; }
+    document.getElementById('fecharSms').onclick = () => {
+      document.getElementById('fakeSms').classList.remove('show');
+    };
+
+    let timerInterval;
+    function iniciarTimer(segundos) {
+      const timer = document.getElementById('timer');
+      const btnVerificar = document.getElementById('btnVerificar');
+      clearInterval(timerInterval);
+      let restante = segundos;
+
+      timer.textContent = `⏳ Tempo restante: ${restante}s`;
+      timerInterval = setInterval(() => {
+        restante--;
+        timer.textContent = `⏳ Tempo restante: ${restante}s`;
+        if (restante <= 0) {
+          clearInterval(timerInterval);
+          document.getElementById('msg').innerText = "⏰ Código expirou, reenviar para continuar.";
+          btnVerificar.disabled = true;
+        }
+      }, 1000);
+    }
+
+    function enviarCodigo() {
       const user = usuarios[cpfLogado];
-      if(!user){ showMsg('Usuário não encontrado.', 'rgba(255,80,80,0.25)'); return; }
-      const tel = user.telefone || 'não informado';
-      const otp = gerarOTP(); // gera código
-      salvarOtpParaCpf(cpfLogado, otp, 5); // expira em 5 min
-      mostrarSmsFalso(formatarTelefoneExib(tel), 'Seu código de verificação: ' + otp);
-      document.getElementById('telefoneExib').innerText = 'Número: ' + formatarTelefoneExib(tel);
+      const otp = gerarOTP();
+      salvarOTP(otp, 30);
+      document.getElementById('telefoneExib').innerText = "Número: " + (user?.telefone || "(não informado)");
+      mostrarSmsFake(otp);
+      iniciarTimer(30);
+      document.getElementById('msg').innerText = "Código enviado!";
+      document.getElementById('btnVerificar').disabled = false;
     }
 
-    // Formata telefone
-    function formatarTelefoneExib(nums){
-      if(!nums) return 'não informado';
-      const s = nums.replace(/\D/g,'');
-      if(s.length <= 2) return '('+s+')';
-      if(s.length <= 6) return '('+s.slice(0,2)+') '+s.slice(2);
-      if(s.length <= 10) return '('+s.slice(0,2)+') '+s.slice(2,6)+'-'+s.slice(6);
-      return '('+s.slice(0,2)+') '+s.slice(2,7)+'-'+s.slice(7);
-    }
-
-    // Mostra mensagem
-    function showMsg(txt, bg='transparent'){
-      const el = document.getElementById('msg');
-      el.innerText = txt;
-      el.style.color = '#fff';
-      el.style.background = bg==='transparent'? 'transparent': bg;
-    }
-
-    // Ao carregar a página
-    document.addEventListener('DOMContentLoaded', ()=>{
-      if(!cpfLogado){ showMsg('Acesso inválido — faça login primeiro.', 'rgba(255,80,80,0.25)'); return; }
-      enviarCodigoSimulado(); // envia código automaticamente
-    });
-
-    // Reenviar código
-    document.getElementById('btnReenviar').addEventListener('click', ()=>{
-      enviarCodigoSimulado();
-      showMsg('Código reenviado (simulado).', 'rgba(0,128,0,0.12)');
-    });
-
-    // Fechar notificação
-    document.getElementById('fecharSms').addEventListener('click', esconderSmsFalso);
-
-    // Verificar código
-    document.getElementById('btnVerificar').addEventListener('click', ()=>{
+    document.getElementById('btnVerificar').addEventListener('click', () => {
       const input = document.getElementById('campoCodigo').value.trim();
-      if(!input || input.length < 6){ showMsg('Digite o código de 6 dígitos.', 'rgba(255,140,0,0.20)'); return; }
-      const otpSalvo = lerOtpParaCpf(cpfLogado);
-      if(!otpSalvo){ showMsg('Código expirado. Reenvie para receber outro.', 'rgba(255,80,80,0.25)'); return; }
+      const otpSalvo = lerOTP();
 
-      // Se o código estiver correto
-      if(input === otpSalvo){
-        limparOtp(cpfLogado); // remove OTP
-        showMsg('✅ Código correto — redirecionando...', 'rgba(0,128,0,0.15)');
-
-        // Redireciona automaticamente para index2.html após 1 segundo
-        setTimeout(()=> { window.location.href = 'index2.html'; }, 1000);
-
-      } else { // Código incorreto
-        showMsg('❌ Código incorreto. Tente novamente.', 'rgba(255,0,0,0.20)');
+      if (!otpSalvo) {
+        document.getElementById('msg').innerText = "⚠️ Código expirado, reenvie.";
+        return;
+      }
+      if (input === otpSalvo) {
+        document.getElementById('msg').innerText = "✅ Verificação concluída!";
+        localStorage.removeItem(OTP_KEY);
+        setTimeout(() => window.location.href = "index2.html", 1000);
+      } else {
+        document.getElementById('msg').innerText = "❌ Código incorreto.";
       }
     });
+
+    document.getElementById('btnReenviar').addEventListener('click', enviarCodigo);
+    document.addEventListener('DOMContentLoaded', enviarCodigo);
   </script>
 </body>
 </html>

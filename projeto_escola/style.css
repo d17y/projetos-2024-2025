@@ -4,40 +4,65 @@
 body { 
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #000000, #003b2e, #00FF88);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-       background: linear-gradient(to bottom, #d6f817, #bec928); /* Fundo degradê */
-  color: #fff;
+  overflow: hidden;
+}
+
+/* Efeito de brilho leve no fundo */
+body::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at top left, rgba(0,255,136,0.15), transparent 70%);
+  animation: pulse 6s infinite alternate;
+}
+@keyframes pulse {
+  from { transform: scale(1); opacity: 0.6; }
+  to { transform: scale(1.2); opacity: 1; }
 }
 
 /* Container centralizado */
 .container {
+  position: relative;
   text-align: center;
   width: 90%;
   max-width: 400px;
-  background: rgba(0,0,0,0.2);
-  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  padding: 40px 30px;
   border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.2);
+  z-index: 1;
 }
 
 /* Campos de entrada */
 .input-group {
   display: flex;
   align-items: center;
-  background: rgba(255,255,255,0.1);
-  border: 2px solid #80deea;
+  background: rgba(255,255,255,0.08);
+  border: 1.5px solid rgba(0,255,136,0.4);
   border-radius: 30px;
   padding: 10px 15px;
   margin: 15px 0;
+  transition: 0.3s;
+}
+
+.input-group:hover {
+  border-color: #00FF88;
+  box-shadow: 0 0 8px rgba(0,255,136,0.3);
 }
 
 .input-group .icon {
   font-size: 18px;
   margin-right: 10px;
+  color: #00FF88;
 }
 
 .input-group input {
@@ -60,39 +85,43 @@ body {
   padding: 12px;
   border: none;
   border-radius: 30px;
-  background: #004d63;
-  color: white;
+  background: linear-gradient(90deg, #00FF88, #00BFFF);
+  color: black;
   font-size: 16px;
   font-weight: bold;
+  letter-spacing: 1px;
   cursor: pointer;
   transition: 0.3s;
 }
 
 .btn-acessar:hover {
-  background: #003742;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0,255,136,0.4);
 }
 
 /* Slogan / mensagem de login */
 .slogan {
   margin: 20px 0;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 600;
   letter-spacing: 1px;
+  text-shadow: 0 0 5px rgba(0,255,136,0.3);
 }
 
 /* Botão Saiba Mais */
 .button {
   display: inline-block;
   text-decoration: none;
-  color: #72700a;
+  color: #002b1e;
   font-weight: bold;
   font-style: italic;
-  background: rgba(255, 251, 190, 0.8);
+  background: rgba(0,255,136,0.8);
   padding: 12px 25px;
   border-radius: 30px;
   transition: 0.3s;
 }
 
 .button:hover {
-  background: #fff;
+  background: #00FF88;
+  transform: scale(1.05);
 }

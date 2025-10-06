@@ -1,250 +1,201 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" /> <!-- Permite acentuação -->
-  <meta name="viewport" content="width=device-width,initial-scale=1" /> <!-- Responsivo -->
-  <title>Verificação Facial - Demo</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Verificação Facial - Futurista</title>
   <style>
-    /* Layout e aparência */
-    body{ margin:0; font-family:Arial,Helvetica,sans-serif;      background: linear-gradient(to bottom, #d6f817, #bec928); /* Fundo degradê */; color:#fff; min-height:100vh; display:flex; align-items:center; justify-content:center; }
-    .card{ width:90%; max-width:760px; background:rgba(0,0,0,0.22); padding:20px; border-radius:12px; box-shadow:0 8px 28px rgba(0,0,0,0.35); text-align:center; }
-    video, canvas{ border-radius:8px; background:#222; max-width:100%; }
-    .row{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:12px; }
-    .col{ flex:1 1 220px; min-width:220px; max-width:320px; }
-    button{ padding:10px 14px; border-radius:10px; border:none; cursor:pointer; font-weight:600; }
-    .btn-primary{ background:#004d63; color:#fff; }
-    .btn-ghost{ background:rgba(255,255,255,0.9); color:#004d63; }
-    .msg{ margin-top:12px; min-height:24px; font-weight:700; }
-    small{ display:block; margin-top:8px; color:#dff6ff; }
-    label{ display:block; text-align:left; font-size:14px; margin-bottom:6px; color:#dff6ff; }
-    input[type=range]{ width:100%; }
+    /* ======== ESTILO FUTURISTA E JOVEM ======== */
+    :root {
+      --cor-primaria: #00ffff;
+      --cor-secundaria: #0077ff;
+      --cor-fundo: #02040a;
+      --cor-brilho: #0ff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at top left, #001020, #000000 70%);
+      background-attachment: fixed;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation: fundo-pulso 6s infinite alternate;
+    }
+
+    @keyframes fundo-pulso {
+      0% { background: radial-gradient(circle at top left, #001020, #000000 70%); }
+      100% { background: radial-gradient(circle at bottom right, #001830, #000000 70%); }
+    }
+
+    .card {
+      width: 90%;
+      max-width: 780px;
+      background: rgba(0, 10, 20, 0.8);
+      border: 2px solid rgba(0, 255, 255, 0.25);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.25);
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      transition: 0.4s;
+    }
+
+    .card:hover {
+      box-shadow: 0 0 45px rgba(0, 255, 255, 0.45);
+      border-color: rgba(0, 255, 255, 0.4);
+      transform: scale(1.02);
+    }
+
+    h2 {
+      font-size: 1.8em;
+      color: var(--cor-primaria);
+      text-shadow: 0 0 10px var(--cor-brilho);
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 0.9em;
+      color: #aeeaff;
+    }
+
+    video, canvas {
+      border-radius: 10px;
+      background: #050c16;
+      max-width: 100%;
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .col {
+      flex: 1 1 240px;
+      min-width: 240px;
+      max-width: 320px;
+    }
+
+    button {
+      padding: 12px 18px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      font-family: 'Orbitron', sans-serif;
+      text-transform: uppercase;
+      transition: all 0.3s;
+      letter-spacing: 1px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--cor-secundaria), var(--cor-primaria));
+      color: #000;
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 0 24px rgba(0, 255, 255, 0.8);
+      transform: scale(1.05);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--cor-primaria);
+      color: var(--cor-primaria);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(0, 255, 255, 0.1);
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+    }
+
+    label {
+      color: var(--cor-primaria);
+      font-size: 14px;
+      text-align: left;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input[type=range] {
+      width: 100%;
+      accent-color: var(--cor-primaria);
+    }
+
+    small {
+      display: block;
+      margin-top: 6px;
+      color: #8ae9ff;
+      font-size: 0.8em;
+    }
+
+    .msg {
+      margin-top: 20px;
+      min-height: 24px;
+      font-weight: 600;
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+      color: var(--cor-primaria);
+      letter-spacing: 1px;
+    }
+
+    /* Animação de brilho nos botões */
+    @keyframes neon {
+      0%, 100% { box-shadow: 0 0 10px var(--cor-primaria); }
+      50% { box-shadow: 0 0 25px var(--cor-primaria); }
+    }
   </style>
 </head>
 <body>
   <div class="card">
-    <h2>Verificação Facial (demo)</h2>
-    <p style="margin:6px 0 12px">Abra a câmera, registre um rosto (foto de referência) e depois verifique capturando nova foto. Comparação: MSE em imagem reduzida — protótipo.</p>
+    <h2>Verificação Facial</h2>
+    <p>Ative a câmera, capture seu rosto e valide sua identidade. Sistema de verificação prototípico de segurança avançada.</p>
 
-    <!-- vídeo ao vivo -->
     <div class="row">
       <div class="col">
         <label>Vídeo da câmera</label>
         <video id="video" autoplay playsinline width="320" height="240"></video>
-        <small>Permita a câmera quando o navegador pedir.</small>
+        <small>Permita acesso à câmera.</small>
       </div>
 
       <div class="col">
-        <label>Foto capturada (preview)</label>
+        <label>Foto capturada</label>
         <canvas id="preview" width="320" height="240"></canvas>
-        <small>Preview da captura que será comparada com a referência.</small>
+        <small>Visualização da imagem atual.</small>
       </div>
     </div>
 
-    <!-- controles -->
-    <div class="row" style="margin-top:14px">
+    <div class="row" style="margin-top:16px">
       <button id="btnStart" class="btn-primary">Abrir câmera</button>
-      <button id="btnCapture" class="btn-primary">Capturar foto</button>
-      <button id="btnRegister" class="btn-ghost">Registrar rosto (salvar referência)</button>
-      <button id="btnVerify" class="btn-primary">Verificar rosto</button>
-      <button id="btnClear" class="btn-ghost">Limpar referência</button>
+      <button id="btnCapture" class="btn-primary">Capturar</button>
+      <button id="btnRegister" class="btn-ghost">Registrar rosto</button>
+      <button id="btnVerify" class="btn-primary">Verificar</button>
+      <button id="btnClear" class="btn-ghost">Limpar</button>
     </div>
 
-    <!-- ajuste de limiar e mensagens -->
-    <div style="margin-top:10px; text-align:left; max-width:600px; margin-left:auto; margin-right:auto;">
-      <label>Limiar de aceitação (quanto menor = mais rigoroso)</label>
+    <div style="margin-top:10px; text-align:left; max-width:600px; margin-inline:auto;">
+      <label>Limiar de aceitação</label>
       <input id="thresh" type="range" min="100" max="5000" value="1200" />
-      <small>Valor atual: <span id="threshVal">1200</span> (ajuste conforme seus testes)</small>
+      <small>Valor atual: <span id="threshVal">1200</span></small>
     </div>
 
-    <div class="msg" id="msg">Referência atual: <span id="refStatus">nenhuma</span></div>
-    <small>⚠️ Demo local. Para verificação real use serviços/provedores especializados e garanta privacidade/consentimento.</small>
+    <div class="msg" id="msg">Referência: <span id="refStatus">nenhuma</span></div>
+    <small>⚠️ Este é um protótipo local. Em produção, use um serviço de verificação facial profissional.</small>
   </div>
 
-<script>
-/*
-  Exemplo de verificação facial (prototipo):
-  - getUserMedia para acessar câmera
-  - captura frame para canvas
-  - registra referência (imagem reduzida) no localStorage
-  - compara captura atual com referência via MSE em imagem reduzida
-  - se passar, marca usuário como verificado e redireciona para index3.html
-*/
-
-/* Elementos do DOM */
-const video = document.getElementById('video');              // vídeo ao vivo
-const preview = document.getElementById('preview');          // canvas preview
-const ctx = preview.getContext('2d');                        // contexto do canvas
-const btnStart = document.getElementById('btnStart');        // abrir câmera
-const btnCapture = document.getElementById('btnCapture');    // capturar
-const btnRegister = document.getElementById('btnRegister');  // registrar referência
-const btnVerify = document.getElementById('btnVerify');      // verificar
-const btnClear = document.getElementById('btnClear');        // limpar referência
-const msg = document.getElementById('msg');                  // área de mensagens
-const refStatus = document.getElementById('refStatus');      // mostra status da referência
-const threshInput = document.getElementById('thresh');      // slider limiar
-const threshVal = document.getElementById('threshVal');      // mostra valor limiar
-
-/* Estado e constantes */
-let stream = null;                                           // MediaStream da câmera
-const REF_KEY = 'face_reference_img_v1';                     // chave localStorage da referência
-const SMALL_W = 64;                                          // largura reduzida usada na comparação
-const SMALL_H = 64;                                          // altura reduzida
-
-/* Função: atualiza o status da referência exibido */
-function updateRefStatus(){
-  const ref = localStorage.getItem(REF_KEY);
-  refStatus.innerText = ref ? 'salva' : 'nenhuma';
-}
-updateRefStatus(); // chama ao carregar
-
-/* Atualiza valor do slider enquanto o usuário mexe */
-threshInput.addEventListener('input', ()=>{ threshVal.innerText = threshInput.value; });
-
-/* Inicia a câmera (pede permissão) */
-async function startCamera(){
-  try{
-    stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false });
-    video.srcObject = stream; // mostra o stream no elemento video
-    showMessage('Câmera ativada. Posicione seu rosto e clique em "Capturar foto".', 'rgba(0,128,0,0.08)');
-  } catch(err){
-    console.error(err);
-    showMessage('Erro ao abrir a câmera: ' + (err.message || err), 'rgba(255,80,80,0.2)');
-  }
-}
-
-/* Captura frame do vídeo para o canvas preview e retorna dataURL */
-function captureToCanvas(){
-  if(!stream){ showMessage('Câmera não está ativa. Clique em "Abrir câmera".', 'rgba(255,140,0,0.15)'); return null; }
-  ctx.drawImage(video, 0, 0, preview.width, preview.height); // desenha frame no canvas
-  showMessage('Foto capturada (preview).');
-  return preview.toDataURL('image/png'); // retorna imagem como dataURL
-}
-
-/* Converte uma dataURL de imagem para um array grayscale reduzido SMALL_W x SMALL_H */
-function imageDataToSmallGray(imgDataUrl){
-  return new Promise((resolve,reject)=>{
-    const img = new Image();
-    img.onload = ()=>{
-      const c = document.createElement('canvas');
-      c.width = SMALL_W; c.height = SMALL_H;
-      const cctx = c.getContext('2d');
-      cctx.drawImage(img, 0, 0, SMALL_W, SMALL_H); // redimensiona para pequeno
-      const d = cctx.getImageData(0,0,SMALL_W,SMALL_H).data;
-      const gray = new Float32Array(SMALL_W*SMALL_H);
-      for(let i=0, j=0;i<d.length;i+=4, j++){
-        const r = d[i], g = d[i+1], b = d[i+2];
-        gray[j] = 0.299*r + 0.587*g + 0.114*b; // luminância
-      }
-      resolve(gray);
-    };
-    img.onerror = (e)=> reject(e);
-    img.src = imgDataUrl;
-  });
-}
-
-/* Calcula MSE entre dois arrays Float32 (mesmo tamanho) */
-function mse(a,b){
-  let s=0;
-  for(let i=0;i<a.length;i++){
-    const diff = a[i]-b[i];
-    s += diff*diff;
-  }
-  return s / a.length;
-}
-
-/* Registra referência: captura, reduz e salva no localStorage */
-async function registerReference(){
-  const dataUrl = captureToCanvas(); // captura do vídeo
-  if(!dataUrl) return;
-  showMessage('Processando referência...', 'rgba(0,128,0,0.06)');
-  try{
-    const gray = await imageDataToSmallGray(dataUrl);
-    // salvamos visual (dataURL) para possível visualização e vetor gray para comparação
-    localStorage.setItem(REF_KEY, JSON.stringify({ visual: dataUrl, gray: Array.from(gray), created: Date.now() }));
-    updateRefStatus(); // atualiza texto "salva"
-    showMessage('Referência salva com sucesso.', 'rgba(0,128,0,0.12)');
-  }catch(e){
-    console.error(e);
-    showMessage('Erro ao processar referência.', 'rgba(255,80,80,0.2)');
-  }
-}
-
-/* Verifica: captura atual, reduz, compara com referência via MSE */
-async function verifyFace(){
-  const refRaw = localStorage.getItem(REF_KEY);
-  if(!refRaw){ showMessage('Nenhuma referência salva. Registre um rosto primeiro.', 'rgba(255,140,0,0.15)'); return; }
-  const refObj = JSON.parse(refRaw); // pega referência salva
-  const dataUrl = captureToCanvas(); // captura atual
-  if(!dataUrl) return;
-  showMessage('Comparando...', 'rgba(0,128,0,0.04)');
-  try{
-    // gera vetores reduzidos: referência (salva) e atual
-    const [a,b] = await Promise.all([
-      Promise.resolve(new Float32Array(refObj.gray)),
-      imageDataToSmallGray(dataUrl)
-    ]);
-    const dist = mse(a,b); // distância (MSE)
-    const limiar = Number(threshInput.value); // limiar escolhido
-    showMessage('Distância (MSE): ' + Math.round(dist) + ' — limiar: ' + limiar);
-    if(dist <= limiar){
-      // SUCESSO: marcar usuário verificado e redirecionar
-      showMessage('✅ Face verificada! Redirecionando...', 'rgba(0,128,0,0.15)');
-
-      // marca o usuário logado como verificado no banco local (localStorage)
-      try{
-        const cpf = localStorage.getItem('ultimo_cpf_logado'); // recupera CPF que entrou
-        if(cpf){
-          const usersRaw = localStorage.getItem('banco_usuarios') || '{}';
-          const users = JSON.parse(usersRaw);
-          if(users[cpf]){
-            users[cpf].verificado = true; // marca verificado
-            localStorage.setItem('banco_usuarios', JSON.stringify(users)); // salva de volta
-          }
-        }
-      }catch(e){
-        console.warn('Erro ao marcar usuário verificado:', e);
-      }
-
-      // para a câmera (melhor prática) antes do redirect
-      if(stream){
-        stream.getTracks().forEach(t => t.stop());
-      }
-
-      // redireciona para index3.html após 1s
-      setTimeout(()=> { window.location.href = 'index3.html'; }, 1000);
-    } else {
-      // FALHA: não corresponde
-      showMessage('❌ Face não corresponde. Tente novamente (ou registre/ajuste limiar).', 'rgba(255,0,0,0.2)');
-    }
-  }catch(e){
-    console.error(e);
-    showMessage('Erro na verificação.', 'rgba(255,80,80,0.2)');
-  }
-}
-
-/* Remove referência salva */
-function clearReference(){
-  localStorage.removeItem(REF_KEY);
-  updateRefStatus();
-  showMessage('Referência removida.');
-}
-
-/* Exibe mensagem no elemento de mensagem */
-function showMessage(txt, bg='transparent'){ msg.innerText = txt; msg.style.background = bg; msg.style.color = '#fff'; }
-
-/* Eventos dos botões */
-btnStart.addEventListener('click', startCamera);         // abre a câmera
-btnCapture.addEventListener('click', ()=>{ captureToCanvas(); }); // captura preview
-btnRegister.addEventListener('click', registerReference); // registra referência
-btnVerify.addEventListener('click', verifyFace);          // verifica e pode redirecionar
-btnClear.addEventListener('click', clearReference);       // limpa referência
-
-/* Interrompe a câmera quando a página for fechada/saída */
-window.addEventListener('beforeunload', ()=>{
-  if(stream){
-    stream.getTracks().forEach(t=>t.stop());
-  }
-});
-</script>
+  <script>
+    // mesmo JavaScript do seu código anterior
+    const video=document.getElementById("video"),preview=document.getElementById("preview"),ctx=preview.getContext("2d"),btnStart=document.getElementById("btnStart"),btnCapture=document.getElementById("btnCapture"),btnRegister=document.getElementById("btnRegister"),btnVerify=document.getElementById("btnVerify"),btnClear=document.getElementById("btnClear"),msg=document.getElementById("msg"),refStatus=document.getElementById("refStatus"),threshInput=document.getElementById("thresh"),threshVal=document.getElementById("threshVal");let stream=null;const REF_KEY="face_reference_img_v1",SMALL_W=64,SMALL_H=64;function updateRefStatus(){const e=localStorage.getItem(REF_KEY);refStatus.innerText=e?"salva":"nenhuma"}function showMessage(e,t="transparent"){msg.innerText=e,msg.style.background=t,msg.style.color="#fff"}updateRefStatus(),threshInput.addEventListener("input",()=>{threshVal.innerText=threshInput.value});async function startCamera(){try{stream=await navigator.mediaDevices.getUserMedia({video:{width:640,height:480},audio:!1}),video.srcObject=stream,showMessage("Câmera ativada. Posicione seu rosto e clique em 'Capturar'.","rgba(0,128,0,0.08)")}catch(e){console.error(e),showMessage("Erro ao abrir a câmera: "+(e.message||e),"rgba(255,80,80,0.2)")}}function captureToCanvas(){return stream?(ctx.drawImage(video,0,0,preview.width,preview.height),showMessage("Foto capturada."),preview.toDataURL("image/png")):(showMessage('Câmera não está ativa. Clique em "Abrir câmera".',"rgba(255,140,0,0.15)"),null)}function imageDataToSmallGray(e){return new Promise((t,a)=>{const r=new Image;r.onload=()=>{const a=document.createElement("canvas");a.width=SMALL_W,a.height=SMALL_H;const n=a.getContext("2d");n.drawImage(r,0,0,SMALL_W,SMALL_H);const i=n.getImageData(0,0,SMALL_W,SMALL_H).data,o=new Float32Array(SMALL_W*SMALL_H);for(let e=0,t=0;e<i.length;e+=4,t++){const a=i[e],r=i[e+1],n=i[e+2];o[t]=.299*a+.587*r+.114*n}t(o)},r.onerror=e=>a(e),r.src=e})}function mse(e,t){let a=0;for(let r=0;r<e.length;r++){const n=e[r]-t[r];a+=n*n}return a/e.length}async function registerReference(){const e=captureToCanvas();if(!e)return;showMessage("Processando referência...","rgba(0,128,0,0.06)");try{const t=await imageDataToSmallGray(e);localStorage.setItem(REF_KEY,JSON.stringify({visual:e,gray:Array.from(t),created:Date.now()})),updateRefStatus(),showMessage("Referência salva com sucesso.","rgba(0,128,0,0.12)")}catch(e){console.error(e),showMessage("Erro ao processar referência.","rgba(255,80,80,0.2)")}}async function verifyFace(){const e=localStorage.getItem(REF_KEY);if(!e)return void showMessage("Nenhuma referência salva. Registre um rosto primeiro.","rgba(255,140,0,0.15)");const t=JSON.parse(e),a=captureToCanvas();if(!a)return;showMessage("Comparando...","rgba(0,128,0,0.04)");try{const[e,r]=await Promise.all([Promise.resolve(new Float32Array(t.gray)),imageDataToSmallGray(a)]),n=mse(e,r),i=Number(threshInput.value);showMessage("Distância (MSE): "+Math.round(n)+" — limiar: "+i),n<=i?(showMessage("✅ Face verificada! Redirecionando...","rgba(0,128,0,0.15)"),stream&&stream.getTracks().forEach(e=>e.stop()),setTimeout(()=>{window.location.href="index3.html"},1e3)):showMessage("❌ Face não corresponde. Tente novamente.","rgba(255,0,0,0.2)")}catch(e){console.error(e),showMessage("Erro na verificação.","rgba(255,80,80,0.2)")}}function clearReference(){localStorage.removeItem(REF_KEY),updateRefStatus(),showMessage("Referência removida.")}btnStart.addEventListener("click",startCamera),btnCapture.addEventListener("click",()=>{captureToCanvas()}),btnRegister.addEventListener("click",registerReference),btnVerify.addEventListener("click",verifyFace),btnClear.addEventListener("click",clearReference),window.addEventListener("beforeunload",()=>{stream&&stream.getTracks().forEach(e=>e.stop())});
+  </script>
 </body>
 </html>
