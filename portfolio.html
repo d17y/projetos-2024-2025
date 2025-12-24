@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfólio de Davi Ramiro</title>
+
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Fira Code', monospace;
+}
+
+body {
+  background: #0a0a0a;
+  color: #b900e7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* HEADER */
+header {
+  width: 100%;
+  padding: 20px;
+  background: #8803b1;
+  color: white;
+  margin-bottom: 40px;
+}
+
+/* TEXTO LED */
+.led-roxo {
+  font-size: 20px;
+  line-height: 1.5;
+  text-shadow: 0 0 10px #b900e7, 0 0 25px #b900e7;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px #b900e7; }
+  to { text-shadow: 0 0 30px #b900e7; }
+}
+
+/* MAIN */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+  margin-bottom: 180px;
+}
+
+/* LAYOUT PROJETOS + GRAFICOS */
+.layout {
+  display: flex;
+  gap: 80px;
+  align-items: center;
+}
+
+/* PROJETOS */
+.projetos {
+  width: 300px;
+  height: 220px;
+  background: rgba(113, 0, 148, 0.5);
+  border-radius: 20px;
+  border: 2px solid #8803b1;
+  box-shadow: 0 0 20px #8803b1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.projetos h2,
+.projetos p,
+.projetos a {
+  color: white;
+}
+
+/* GRAFICOS */
+.graficos {
+  height: 300px;
+  width: 350px;
+  border-radius: 12px;
+  background-color: #8803b1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* centraliza horizontal */
+  justify-content: center; /* centraliza vertical */
+}
+
+.graficos h2 {
+  margin-bottom: 20px;
+}
+
+.skills {
+  
+  display: flex;
+  gap: 30px;
+}
+
+.skill {
+  align-items: center;
+  text-align: center;
+}
+
+.circle {
+  
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #b900e7 calc(var(--percent) * 1%),
+    #71037e 0%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px #b900e7;
+}
+
+.circle span {
+  color: white;
+  font-weight: bold;
+}
+
+.skill p {
+  margin-top: 10px;
+}
+
+/* CONTATOS */
+.descricao ul {
+  list-style: none;
+  padding: 15px;
+  background: white;
+  border-radius: 10px;
+}
+
+.descricao li {
+  margin: 8px 0;
+}
+
+.descricao a {
+  color: black;
+  text-decoration: none;
+}
+
+/* FOOTER */
+footer {
+  width: 100%;
+  padding: 20px;
+  background: #8803b1;
+  color: white;
+  position: fixed;
+  bottom: 0;
+}
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Meu Portfólio</h1>
+  <p>Bem-vindo! 👇</p>
+</header>
+
+<main>
+
+<h2 class="led-roxo">
+  Me chamo Davi, tenho 17 anos <br>
+  Atualmente estudo programação e estou sempre criando algo novo. <br>
+  Aqui você encontra um pouco do que eu já coloquei em prática.
+</h2>
+
+<section class="layout">
+
+  <!-- PROJETO -->
+  <section class="projetos">
+    <h2>Site 1 — Projeto Escola</h2>
+    <p>Site escolar simples e responsivo.</p>
+    <a href="https://d17y.github.io/Projeto-Escola-Banco2DS" target="_blank">
+      Ver site
+    </a>
+  </section>
+
+  <!-- GRAFICOS -->
+  <section class="graficos">
+    <h2>MEUS DOMÍNIOS</h2>
+
+    <div class="skills">
+      <div class="skill">
+        <div class="circle" style="--percent:0">
+          <span>0%</span>
+        </div>
+        <p>HTML</p>
+      </div>
+
+      <div class="skill">
+        <div class="circle" style="--percent:0">
+          <span>0%</span>
+        </div>
+        <p>CSS</p>
+      </div>
+
+      <div class="skill">
+        <div class="circle" style="--percent:0">
+          <span>0%</span>
+        </div>
+        <p>Python</p>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+<section class="descricao">
+  <ul>
+    <li><a href="https://github.com/d17y" target="_blank">GitHub</a></li>
+    <li><a href="https://www.instagram.com/d17zzz" target="_blank">Instagram</a></li>
+    <li>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=davi.ramiri07@gmail.com" target="_blank">
+        ✉ davi.ramiri07@gmail.com
+      </a>
+    </li>
+    <li>
+      <a href="https://wa.me/5513991690477?text=Oi%20Davi,%20vim%20pelo%20seu%20portfolio!" target="_blank">
+        💬 Falar comigo no WhatsApp
+      </a>
+    </li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <p>Desenvolvido por <strong>Davi</strong> © 2025</p>
+</footer>
+
+</body>
+</html>
